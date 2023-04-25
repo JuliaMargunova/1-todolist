@@ -22,6 +22,15 @@ function App() {
     function addTask(title:string){
         setTasks([{id:v1(),title:title,isDone:false},...tasks])
     }
+    function changeStatus(isDone:boolean, idTask:string){
+        setTasks(tasks.map(t=>t.id!==idTask ? t : {...t, isDone :isDone}))
+    }
+    function changeTaskTitle(title:string, idTask:string){
+        setTasks(tasks.map(t=>t.id!==idTask ? t : {...t, title :title}))
+    }
+    function deleteTask(idTask:string){
+        setTasks(tasks.filter(t=>t.id!==idTask))
+    }
     function filterTask(){
         let filterTasks = tasks;;
         switch (filter){
@@ -30,21 +39,12 @@ function App() {
             default : return filterTasks
         }
     }
-    function changeTaskIsDone(isDone:boolean, idTask:string){
-        setTasks(tasks.map(t=>t.id!==idTask ? t : {...t, isDone :isDone}))
-    }
-    function changeTaskTitle(title:string, idTask:string){
-        setTasks(tasks.map(t=>t.id!==idTask ? t : {...t, title :title}))
-    }
 
-    function deleteTask(idTask:string){
-        setTasks(tasks.filter(t=>t.id!==idTask))
-    }
 
 
     return (
         <div className="App">
-            <Todolist filter={filter} title={"Books"} tasks={filterTask()} deleteTask={deleteTask} onChangeTitle={changeTaskTitle} setFilterTask={setFilter} changeTaskIsDone={changeTaskIsDone} addTask={addTask}/>
+            <Todolist filter={filter} title={"Books"} tasks={filterTask()} deleteTask={deleteTask} onChangeTitle={changeTaskTitle} setFilterTask={setFilter} changeTaskStatus={changeStatus} addTask={addTask}/>
         </div>
     );
 }

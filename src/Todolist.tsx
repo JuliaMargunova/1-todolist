@@ -8,7 +8,7 @@ type TodolistType = {
     tasks: TaskType[]
     addTask: (title: string) => void
     setFilterTask: (filter: FilterType) => void
-    changeTaskIsDone: (isDone: boolean, idTask: string) => void
+    changeTaskStatus: (isDone: boolean, idTask: string) => void
     deleteTask: (idTask: string) => void
     filter: FilterType
     onChangeTitle:(title:string, id:string)=>void
@@ -17,7 +17,7 @@ export const Todolist: React.FC<TodolistType> = ({title, filter, ...props}) => {
     const [newTitle, setNewTitle] = useState<string>('')
     const [error, setError] = useState<string>("");
 
-    function onChangeInput(e: ChangeEvent<HTMLInputElement>) {
+    function onChangeTitle(e: ChangeEvent<HTMLInputElement>) {
         setError('')
         if (e.currentTarget.value.trim() !== '') {
             setNewTitle(e.currentTarget.value.trim())
@@ -38,8 +38,8 @@ export const Todolist: React.FC<TodolistType> = ({title, filter, ...props}) => {
         addTask()
     }
 
-    function onChangeIsDoneHandler(e: ChangeEvent<HTMLInputElement>, idTask: string) {
-        props.changeTaskIsDone(e.currentTarget.checked, idTask)
+    function changeStatus(e: ChangeEvent<HTMLInputElement>, idTask: string) {
+        props.changeTaskStatus(e.currentTarget.checked, idTask)
     }
 
     function onKeyDownHandler(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -68,7 +68,7 @@ export const Todolist: React.FC<TodolistType> = ({title, filter, ...props}) => {
         <div>
             <h3>{title}</h3>
             <div>
-                <input className={error && 'error_input'} value={newTitle} onChange={onChangeInput}
+                <input className={error && 'error_input'} value={newTitle} onChange={onChangeTitle}
                        onKeyDown={onKeyDownHandler}/>
                 <button onClick={onClickAddTaskHandler}>+</button>
                 {error && <div className={'error_message'}>{error}</div>}
@@ -80,7 +80,7 @@ export const Todolist: React.FC<TodolistType> = ({title, filter, ...props}) => {
                     return (
                         <li key={t.id} className={t.isDone ? 'completed_task' : ''}>
                             <button onClick={() => onClickDeleteHandler(t.id)}>x</button>
-                            <input type="checkbox" onChange={(e) => onChangeIsDoneHandler(e, t.id)}
+                            <input type="checkbox" onChange={(e) => changeStatus(e, t.id)}
                                    checked={t.isDone}/>
                             <EditableSpan title={t.title} onChangeTitle={(title)=>onChangeTitleHandler(title,t.id)}/>
                         </li>)
