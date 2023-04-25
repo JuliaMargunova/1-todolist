@@ -6,3 +6,19 @@
 .App > div {
   margin-right: 50px;
 }
+
+.error_message{
+  color: red;
+}
+.error_input{
+  border: 1px solid red;
+}
+
+.completed_task{
+  opacity: 0.5;
+}
+
+.active_button{
+  background: cadetblue;
+}
+

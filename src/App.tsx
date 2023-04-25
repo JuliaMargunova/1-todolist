@@ -1,29 +1,49 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
+import {v1} from "uuid";
+
+    id:string
+    title:string
+    isDone:boolean
+}
+
+export type FilterType='all'|'active'|'completed'
 
 function App() {
-    /*  const topCars = [
-          {manufacturer:'BMW', model:'m5cs'},
-          {manufacturer:'Mercedes', model:'e63s'},
-          {manufacturer:'Audi', model:'rs6'}
-      ];*/
-    const track1 ="fgjgsvsdh jnhjn,mnc";
-    const track2 ="fgjgsvsvvvb   g ggg jnhjn,mnc";
+    const[filter,setFilter]=useState<FilterType>('all')
+    const [tasks,setTasks]= useState<Array<TaskType>>( [
+        {id:v1(),title:"HTML",isDone:false},
+        {id:v1(),title:"CSS",isDone:true},
+        {id:v1(),title:"JS",isDone:false},
+        {id:v1(),title:"REACT",isDone:true}
+    ])
+    function addTask(title:string){
+        setTasks([{id:v1(),title:title,isDone:false},...tasks])
+    }
+    function filterTask(){
+        let filterTasks = tasks;;
+        switch (filter){
+            case "active": return tasks.filter((t)=>!t.isDone)
+            case "completed":return tasks.filter((t)=>t.isDone)
+            default : return filterTasks
+        }
+    }
+    function changeTaskIsDone(isDone:boolean, idTask:string){
+        setTasks(tasks.map(t=>t.id!==idTask ? t : {...t, isDone :isDone}))
+    }
+    function changeTaskTitle(title:string, idTask:string){
+        setTasks(tasks.map(t=>t.id!==idTask ? t : {...t, title :title}))
+    }
 
-    const tasks1 = [
-        { id: 1, title: "HTML&CSS", isDone: true },
-        { id: 2, title: "JS", isDone: true },
-        { id: 3, title: "ReactJS", isDone: false }
-    ]
-    const tasks2 = [
-        { id: 1, title: "Hello world", isDone: true },
-        { id: 2, title: "I am Happy", isDone: false },
-        { id: 3, title: "Yo", isDone: false }
-    ]
-    return (<div>
-            <Todolist track1={track1} track2={"ddddd"} tasks={tasks1} />
-            {/*  <Todolist track1={track2} tasks={tasks2} />*/}
+    function deleteTask(idTask:string){
+        setTasks(tasks.filter(t=>t.id!==idTask))
+    }
+
+
+    return (
+        <div className="App">
+            <Todolist filter={filter} title={"Books"} tasks={filterTask()} deleteTask={deleteTask} onChangeTitle={changeTaskTitle} setFilterTask={setFilter} changeTaskIsDone={changeTaskIsDone} addTask={addTask}/>
         </div>
     );
 }
