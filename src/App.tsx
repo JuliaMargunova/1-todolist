@@ -109,12 +109,17 @@ function App() {
 
                     }
 
-                    return <Todolist todolistId={tl.id} key={tl.id} filter={tl.filter} title={tl.name}
+                    return <Todolist todolistId={tl.id}
+                                     key={tl.id}
+                                     filter={tl.filter}
+                                     title={tl.name}
                                      tasks={filterTask()}
-                                     deleteTask={removeTask} onChangeTitle={changeTaskTitle}
+                                     deleteTask={removeTask}
+                                     onChangeTitle={changeTaskTitle}
                                      setFilterTask={(filter, tlId) => changeFilter(filter, tlId)}
                                      changeTaskStatus={changeStatus}
-                                     addTask={addTask} removeTodolist={removeTodolist}/>
+                                     addTask={addTask}
+                                     removeTodolist={removeTodolist}/>
                 })
             }
         </div>)

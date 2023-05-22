@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
+import Button from "@mui/material/Button";
 
 type AddItemFormProps = {
     addItem: (title: string) => void
@@ -38,7 +39,7 @@ export function AddItemForm(props: AddItemFormProps) {
         <div>
             <input className={error && 'error_input'} value={newTitle} onChange={onChangeTitle}
                    onKeyDown={onKeyDownHandler}/>
-            <button onClick={onClickAddTaskHandler}>+</button>
+            <Button variant={"contained"} onClick={onClickAddTaskHandler}>+</Button>
             {error && <div className={'error_message'}>{error}</div>}
         </div>
     )
